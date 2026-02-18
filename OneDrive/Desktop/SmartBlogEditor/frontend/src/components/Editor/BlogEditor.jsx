@@ -98,7 +98,8 @@ const BlogEditor = () => {
         if (!currentPostId) return;
         try {
             const endpoint = postStatus === 'published' ? 'unpublish' : 'publish';
-            const response = await fetch(`/api/posts/${currentPostId}/${endpoint}`, { method: 'POST' });
+            const apiUrl = import.meta.env.VITE_API_URL || '/api';
+            const response = await fetch(`${apiUrl}/posts/${currentPostId}/${endpoint}`, { method: 'POST' });
             const updated = await response.json();
             setPostStatus(updated.status);
             updatePostInList(currentPostId, { status: updated.status });
